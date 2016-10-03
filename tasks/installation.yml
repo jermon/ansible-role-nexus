@@ -20,7 +20,7 @@
 
 - debug: var=installed_dir.files[0].path
 
-- name: Installation - Create symlink
+- name: Installation - Create home_dir symlink
   file:
     src: "{{ installed_dir.files[0].path }}"
     dest: "{{ nexus_install_dir }}/nexus"

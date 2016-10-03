@@ -1,13 +1,13 @@
 ---
 - name: Configuration - Uncomment INSTALL4J_JAVA_HOME_OVERRIDE
   lineinfile:
-    dest: "{{ nexus_install_dir }}/nexus/bin/nexus"
+    dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^# INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
 
 - name: Configuration - Set INSTALL4J_JAVA_HOME_OVERRIDE
   lineinfile:
-    dest: "{{ nexus_install_dir }}/nexus/bin/nexus"
+    dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
 
