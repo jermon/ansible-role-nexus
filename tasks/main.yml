@@ -1,4 +1,8 @@
 ---
+- include: user.yml
 - include: installation.yml
 - include: configuration.yml
-- include: cleanup.yml
+- include: initd.yml
+- name: Main -  Clean-up
+  include: cleanup.yml
+  when: nexus_cleanup == true

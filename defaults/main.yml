@@ -2,3 +2,7 @@
 nexus_download_url: 'http://download.sonatype.com/nexus/3/latest-unix.tar.gz'
 nexus_install_dir: '/opt'
 nexus_home_dir: "{{ nexus_install_dir }}/nexus"
+nexus_user: 'nexus'
+nexus_group: "{{ nexus_user }}"
+
+nexus_cleanup: true

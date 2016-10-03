@@ -13,6 +13,8 @@
   unarchive:
     src: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
     dest: "{{ nexus_install_dir }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
     copy: no
 
 - find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory

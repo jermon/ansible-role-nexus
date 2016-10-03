@@ -1,0 +1,6 @@
+---
+- name: User - Create nexus group
+  group: name={{ nexus_group }}
+
+- name: User - Create nexus user
+  user: name={{ nexus_user }} group={{ nexus_group }} shell=/bin/bash home={{ nexus_home_dir }} createhome=no

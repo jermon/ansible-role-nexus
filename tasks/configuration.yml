@@ -1,4 +1,33 @@
 ---
+- name: User - Create .bashrc
+  stat: path="{{ nexus_home_dir }}/.bashrc"
+  register: user_bashrc
+
+- name: User - Create .bashrc
+  copy:
+    src: '/etc/skel/.bashrc'
+    dest: "{{ nexus_home_dir }}/.bashrc"
+    remote_src: yes
+  when: user_bashrc.stat.exists == false
+
+- name: User - NEXUS_HOME
+  lineinfile:
+    dest: "{{ nexus_home_dir }}/.bashrc"
+    regexp: "^NEXUS_HOME="
+    line: "NEXUS_HOME={{ nexus_home_dir }}"
+
+- name: User - Uncomment run_as_user
+  lineinfile:
+    dest: "{{ nexus_home_dir }}/bin/nexus.rc"
+    regexp: "^#run_as_user="
+    line: "run_as_user={{ nexus_user }}"
+
+- name: User - Set run_as_user
+  lineinfile:
+    dest: "{{ nexus_home_dir }}/bin/nexus.rc"
+    regexp: "^run_as_user="
+    line: "run_as_user={{ nexus_user }}"
+
 - name: Configuration - Uncomment INSTALL4J_JAVA_HOME_OVERRIDE
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus"
