@@ -1,0 +1,27 @@
+---
+- name: Installation - Check the downloaded file
+  stat: path="{{ nexus_install_dir }}/nexus-unix.tar.gz"
+  register: downloaded
+
+- name: Installation - Download Nexus installation file 
+  get_url: 
+    url: "{{ nexus_download_url }}"
+    dest: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
+  when: downloaded.stat.exists == false
+
+- name: Installation - Uncompress downloaded file
+  unarchive:
+    src: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
+    dest: "{{ nexus_install_dir }}"
+    copy: no
+
+- find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory
+  register: installed_dir
+
+- debug: var=installed_dir.files[0].path
+
+- name: Installation - Create symlink
+  file:
+    src: "{{ installed_dir.files[0].path }}"
+    dest: "{{ nexus_install_dir }}/nexus"
+    state: link
