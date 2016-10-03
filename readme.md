@@ -4,7 +4,7 @@
 
 * Java 8
 
-## Usage
+## Usage
 
     http://<server>:8081
 
