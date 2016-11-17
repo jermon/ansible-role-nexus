@@ -42,14 +42,14 @@
 
 - name: Ensure nexus user is owner of nexus directory.
   file:
-    path: "{{ nexus_home_dir }}"
+    path: "{{ installed_dir.files[0].path }}"
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     recurse: yes
 
 - name: Check sonatype-work.
   stat: path="{{ nexus_install_dir }}/sonatype-work"
-  register: sonatype-work
+  register: sonatype_work
 
 - name: Ensure nexus user is owner of sonatype-work.
   file:
@@ -57,4 +57,4 @@
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     recurse: yes
-  when: sonatype-work.stat.exists
+  when: sonatype_work.stat.exists
