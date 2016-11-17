@@ -46,6 +46,18 @@
     regexp: "^nexus-context-path="
     line: "nexus-context-path={{ nexus_context_path }}"
 
+- name: Configuration - Jetty application-port.
+  lininfile:
+    dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
+    regexp: "^application-port="
+    line: "application-port={{ nexus_application_port }}"
+
+- name: Configuration - Jetty application-host.
+  lininfile:
+    dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
+    regexp: "^application-host="
+    line: "application-host={{ nexus_application_host }}"
+
 - name: Configuration - Ensure nexus user is owner of nexus directory.
   file:
     path: "{{ installed_dir.files[0].path }}"

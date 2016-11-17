@@ -5,6 +5,8 @@ nexus_home_dir: "{{ nexus_install_dir }}/nexus"
 nexus_user: 'nexus'
 nexus_group: "{{ nexus_user }}"
 
+nexus_application_port: 8081
+nexus_application_host: '0.0.0.0'
 nexus_context_path: '/'
 
 nexus_cleanup: true
