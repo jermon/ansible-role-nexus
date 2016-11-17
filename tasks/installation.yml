@@ -22,10 +22,18 @@
 
 - debug: var={{ installed_dir.files[0].path }}
 
-- name: Installation - Create home_dir symlink
+- name: Ensure home_dir symlink is created.
   file:
     src: "{{ installed_dir.files[0].path }}"
     dest: "{{ nexus_install_dir }}/nexus"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_group }}"
+    state: link
+
+- name: Ensure /var/log/nexus symlink is created.
+  file:
+    src: "{{ nexus_install_dir }}/sonatype-work/nexus3/log"
+    dest: '/var/log/nexus'
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     state: link
