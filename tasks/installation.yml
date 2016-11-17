@@ -20,7 +20,7 @@
 - find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory
   register: installed_dir
 
-- debug: var={{ installed_dir.files[0].path }}
+- debug: var=installed_dir.files[0].path
 
 - name: Installation - Ensure home_dir symlink is created.
   file:
