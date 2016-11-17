@@ -15,48 +15,56 @@
     dest: "{{ nexus_home_dir }}/.bashrc"
     regexp: "^NEXUS_HOME="
     line: "NEXUS_HOME={{ nexus_home_dir }}"
+  notify: restart nexus service
 
 - name: Configuration - Uncomment run_as_user.
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus.rc"
     regexp: "^#run_as_user="
     line: "run_as_user={{ nexus_user }}"
+  notify: restart nexus service
 
 - name: Configuration - Set run_as_user.
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus.rc"
     regexp: "^run_as_user="
     line: "run_as_user={{ nexus_user }}"
+  notify: restart nexus service
 
 - name: Configuration - Uncomment INSTALL4J_JAVA_HOME_OVERRIDE
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^# INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
+  notify: restart nexus service
 
 - name: Configuration - Set INSTALL4J_JAVA_HOME_OVERRIDE
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
+  notify: restart nexus service
 
 - name: Configuration - nexus-context-path.
   lineinfile:
     dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
     regexp: "^nexus-context-path="
     line: "nexus-context-path={{ nexus_context_path }}"
+  notify: restart nexus service
 
 - name: Configuration - Jetty application-port.
   lineinfile:
     dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
     regexp: "^application-port="
     line: "application-port={{ nexus_application_port }}"
+  notify: restart nexus service
 
 - name: Configuration - Jetty application-host.
   lineinfile:
     dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
     regexp: "^application-host="
     line: "application-host={{ nexus_application_host }}"
+  notify: restart nexus service
 
 - name: Configuration - Ensure nexus user is owner of nexus directory.
   file:

@@ -9,4 +9,4 @@
 - name: Initd - update-rc.d nexus.
   command: "update-rc.d nexus defaults"
   when: initd_symlink.changed
-  notify: start nexus service
+  notify: restart nexus service
