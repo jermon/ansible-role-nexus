@@ -40,6 +40,12 @@
     regexp: "^INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
 
+- name: Configuration - nexus-context-path.
+  lineinfile:
+    dest: "{{ nexus_home_dir }}/etc/nexus-default.properties"
+    regexp: "^nexus-context-path="
+    line: "nexus-context-path={{ nexus_context_path }}"
+
 - name: Ensure nexus user is owner of nexus directory.
   file:
     path: "{{ installed_dir.files[0].path }}"

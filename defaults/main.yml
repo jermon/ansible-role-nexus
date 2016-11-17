@@ -5,4 +5,6 @@ nexus_home_dir: "{{ nexus_install_dir }}/nexus"
 nexus_user: 'nexus'
 nexus_group: "{{ nexus_user }}"
 
+nexus_context_path: '/'
+
 nexus_cleanup: true
