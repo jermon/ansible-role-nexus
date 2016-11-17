@@ -1,28 +1,28 @@
 ---
-- name: User - Create .bashrc
+- name: Configuration - Create .bashrc.
   stat: path="{{ nexus_home_dir }}/.bashrc"
   register: user_bashrc
 
-- name: User - Create .bashrc
+- name: Configuration - Create .bashrc.
   copy:
     src: '/etc/skel/.bashrc'
     dest: "{{ nexus_home_dir }}/.bashrc"
     remote_src: yes
   when: user_bashrc.stat.exists == false
 
-- name: User - NEXUS_HOME
+- name: Configuration - NEXUS_HOME.
   lineinfile:
     dest: "{{ nexus_home_dir }}/.bashrc"
     regexp: "^NEXUS_HOME="
     line: "NEXUS_HOME={{ nexus_home_dir }}"
 
-- name: User - Uncomment run_as_user
+- name: Configuration - Uncomment run_as_user.
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus.rc"
     regexp: "^#run_as_user="
     line: "run_as_user={{ nexus_user }}"
 
-- name: User - Set run_as_user
+- name: Configuration - Set run_as_user.
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus.rc"
     regexp: "^run_as_user="
@@ -46,18 +46,18 @@
     regexp: "^nexus-context-path="
     line: "nexus-context-path={{ nexus_context_path }}"
 
-- name: Ensure nexus user is owner of nexus directory.
+- name: Configuration - Ensure nexus user is owner of nexus directory.
   file:
     path: "{{ installed_dir.files[0].path }}"
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     recurse: yes
 
-- name: Check sonatype-work.
+- name: Configuration - Check sonatype-work.
   stat: path="{{ nexus_install_dir }}/sonatype-work"
   register: sonatype_work
 
-- name: Ensure nexus user is owner of sonatype-work.
+- name: Configuration - Ensure nexus user is owner of sonatype-work.
   file:
     path: "{{ nexus_install_dir }}/sonatype-work"
     owner: "{{ nexus_user }}"

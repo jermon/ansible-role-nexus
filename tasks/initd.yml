@@ -1,12 +1,12 @@
 ---
-- name: Initd - Create init.d symlink
+- name: Initd - Create init.d symlink.
   file:
     src: "{{ nexus_home_dir }}/bin/nexus"
     dest: "/etc/init.d/nexus"
     state: link
   register: initd_symlink
 
-- name: initd - update-rc.d nexus
+- name: Initd - update-rc.d nexus.
   command: "update-rc.d nexus defaults"
   when: initd_symlink.changed
   notify: start nexus service

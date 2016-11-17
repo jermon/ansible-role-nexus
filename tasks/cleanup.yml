@@ -1,3 +1,3 @@
 ---
-- name: Remove downloaded file
+- name: Cleanup - Remove downloaded file
   file: path="{{ nexus_install_dir }}/nexus-unix.tar.gz" state=absent
