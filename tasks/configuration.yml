@@ -46,7 +46,7 @@
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^# INSTALL4J_JAVA_HOME_OVERRIDE="
-    line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
+    line: "INSTALL4J_JAVA_HOME_OVERRIDE={{ nexus_java_home }}"
     backrefs: yes
   notify: restart nexus service
 
@@ -54,7 +54,7 @@
   lineinfile:
     dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^INSTALL4J_JAVA_HOME_OVERRIDE="
-    line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
+    line: "INSTALL4J_JAVA_HOME_OVERRIDE={{ nexus_java_home }}"
   notify: restart nexus service
 
 - name: Configuration - nexus-context-path.
