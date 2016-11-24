@@ -5,8 +5,10 @@
   stat: path="{{ nexus_home_dir }}/bin/nexus"
   register: installed
 
-- include: installation.yml
+- include: download.yml
   when: installed.stat.exists == false
+
+- include: installation.yml
 
 - include: configuration.yml
 

@@ -1,32 +1,32 @@
 ---
-- name: Installation - Check the downloaded file.
-  stat: path="{{ nexus_install_dir }}/nexus-unix.tar.gz"
-  register: downloaded
-
-- name: Installation - Download Nexus installation file.
-  get_url: 
-    url: "{{ nexus_download_url }}"
-    dest: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
-  when: downloaded.stat.exists == false
-
-- name: Installation - Uncompress downloaded file.
-  unarchive:
-    src: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
-    dest: "{{ nexus_install_dir }}"
-    owner: "{{ nexus_user }}"
-    group: "{{ nexus_user }}"
-    copy: no
-  when: installed.stat.exists == false
-
 - find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory
   register: installed_dir
 
 - debug: var=installed_dir.files[0].path
 
-- name: Installation - Ensure home_dir symlink is created.
+- name: Configuration - Ensure home_dir symlink is created.
   file:
     src: "{{ installed_dir.files[0].path }}"
     dest: "{{ nexus_install_dir }}/nexus"
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     state: link
+
+- name: Configuration - Ensure nexus user is owner of nexus directory.
+  file:
+    path: "{{ installed_dir.files[0].path }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_group }}"
+    recurse: yes
+
+- name: Configuration - Check sonatype-work.
+  stat: path="{{ nexus_install_dir }}/sonatype-work"
+  register: sonatype_work
+
+- name: Configuration - Ensure nexus user is owner of sonatype-work.
+  file:
+    path: "{{ nexus_install_dir }}/sonatype-work"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_group }}"
+    recurse: yes
+  when: sonatype_work.stat.exists
