@@ -7,7 +7,7 @@
     group: "{{ nexus_group }}"
     state: link
 
-- name: Configuration - Create .bashrc.
+- name: Configuration - Ensure .bashrc is created.
   stat: path="{{ nexus_home_dir }}/.bashrc"
   register: user_bashrc
 
@@ -30,6 +30,7 @@
     dest: "{{ nexus_home_dir }}/bin/nexus.rc"
     regexp: "^#run_as_user="
     line: "run_as_user={{ nexus_user }}"
+    backrefs: yes
   notify: restart nexus service
 
 - name: Configuration - Set run_as_user.
@@ -44,6 +45,7 @@
     dest: "{{ nexus_home_dir }}/bin/nexus"
     regexp: "^# INSTALL4J_JAVA_HOME_OVERRIDE="
     line: "INSTALL4J_JAVA_HOME_OVERRIDE=/usr/lib/jvm/java-8-oracle"
+    backrefs: yes
   notify: restart nexus service
 
 - name: Configuration - Set INSTALL4J_JAVA_HOME_OVERRIDE
