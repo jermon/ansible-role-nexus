@@ -16,6 +16,8 @@
     src: '/etc/skel/.bashrc'
     dest: "{{ nexus_home_dir }}/.bashrc"
     remote_src: yes
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_group }}"
   when: user_bashrc.stat.exists == false
 
 - name: Configuration - NEXUS_HOME.
