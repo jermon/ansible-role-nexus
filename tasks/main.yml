@@ -1,8 +1,17 @@
 ---
 - include: user.yml
+
+- name: Ensure nexus is installed.
+  stat: path="{{ nexus_home_dir }}/bin/nexus"
+  register: installed
+
 - include: installation.yml
+  when: installed.stat.exists == false
+
 - include: configuration.yml
+
 - include: initd.yml
+
 - name: Main -  Clean-up
   include: cleanup.yml
   when: nexus_cleanup == true

@@ -1,21 +1,22 @@
 ---
-- name: Installation - Check the downloaded file
+- name: Installation - Check the downloaded file.
   stat: path="{{ nexus_install_dir }}/nexus-unix.tar.gz"
   register: downloaded
 
-- name: Installation - Download Nexus installation file 
+- name: Installation - Download Nexus installation file.
   get_url: 
     url: "{{ nexus_download_url }}"
     dest: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
   when: downloaded.stat.exists == false
 
-- name: Installation - Uncompress downloaded file
+- name: Installation - Uncompress downloaded file.
   unarchive:
     src: "{{ nexus_install_dir }}/nexus-unix.tar.gz"
     dest: "{{ nexus_install_dir }}"
     owner: "{{ nexus_user }}"
     group: "{{ nexus_user }}"
     copy: no
+  when: installed.stat.exists == false
 
 - find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory
   register: installed_dir
@@ -26,14 +27,6 @@
   file:
     src: "{{ installed_dir.files[0].path }}"
     dest: "{{ nexus_install_dir }}/nexus"
-    owner: "{{ nexus_user }}"
-    group: "{{ nexus_group }}"
-    state: link
-
-- name: Installation - Ensure /var/log/nexus symlink is created.
-  file:
-    src: "{{ nexus_install_dir }}/sonatype-work/nexus3/log"
-    dest: '/var/log/nexus'
     owner: "{{ nexus_user }}"
     group: "{{ nexus_group }}"
     state: link

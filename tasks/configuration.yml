@@ -1,4 +1,12 @@
 ---
+- name: Configuration - Ensure /var/log/nexus symlink is created.
+  file:
+    src: "{{ nexus_install_dir }}/sonatype-work/nexus3/log"
+    dest: '/var/log/nexus'
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_group }}"
+    state: link
+
 - name: Configuration - Create .bashrc.
   stat: path="{{ nexus_home_dir }}/.bashrc"
   register: user_bashrc
