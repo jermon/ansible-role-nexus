@@ -6,7 +6,7 @@
   register: installed
 
 - include: download.yml
-  when: installed.stat.exists == false
+  when: installed.stat.exists == false or nexus_update
 
 - include: installation.yml
 
@@ -17,3 +17,19 @@
 - name: Main -  Clean-up
   include: cleanup.yml
   when: nexus_cleanup == true
+
+- name: install nexus.service
+  template:
+    src: nexus.service.j2
+    dest: /lib/systemd/system/nexus.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enamble and start
+  systemd:
+    state: started
+    enabled: yes
+    daemon_reload: yes
+    name: nexus
+

@@ -1,5 +1,8 @@
 ---
-- find: path="{{ nexus_install_dir }}" patterns="nexus-*" file_type=directory
+- find: 
+    path: "{{ nexus_install_dir }}"
+    patterns: "nexus-*"
+    file_type: directory
   register: installed_dir
 
 - name: Installation - Installed directory.
