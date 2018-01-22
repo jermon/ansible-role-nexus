@@ -1,21 +1,21 @@
 ---
-- include: user.yml
+- import_tasks: user.yml
 
 - name: Ensure nexus is installed.
   stat: path="{{ nexus_home_dir }}/bin/nexus"
   register: installed
 
-- include: download.yml
+- import_tasks: download.yml
   when: installed.stat.exists == false or nexus_update
 
-- include: installation.yml
+- import_tasks: installation.yml
 
-- include: configuration.yml
+- import_tasks: configuration.yml
 
-- include: initd.yml
+- import_tasks: initd.yml
 
 - name: Main -  Clean-up
-  include: cleanup.yml
+  import_tasks: cleanup.yml
   when: nexus_cleanup == true
 
 - name: install nexus.service
@@ -25,9 +25,9 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nexus servic
+  notify: restart nexus service
 
-- name: Enamble and start
+- name: Enable and start
   systemd:
     state: started
     enabled: yes

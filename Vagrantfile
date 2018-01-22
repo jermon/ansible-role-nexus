@@ -85,7 +85,7 @@ Vagrant.configure(2) do |config|
   config.vm.define :build do |build|
     build.vm.provision "ansible" do |ansible|
       ansible.playbook = "tests/test.yml"
-#      ansible.raw_arguments = ["--skip-tags=maven"]
+      ansible.compatibility_mode = "2.0"
     end
   end
 end
